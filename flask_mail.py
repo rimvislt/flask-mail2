@@ -11,7 +11,7 @@
 
 from __future__ import with_statement
 
-__version__ = '0.9.1'
+__version__ = '1.0.0'
 
 import re
 import blinker
