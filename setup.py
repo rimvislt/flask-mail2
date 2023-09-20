@@ -23,7 +23,8 @@ setup(
     maintainer='Rimvydas Zilinskas',
     maintainer_email='rim@rdzdirect.com',
     description='Flask extension for sending email',
-    long_description=__doc__,
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     py_modules=[
         'flask_mail'
     ],
