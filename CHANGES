@@ -6,7 +6,7 @@ Here you can see the full list of changes between each Flask-Mail2 release.
 Version 1.0.2
 -------------
 
-Released September 20 2023
+Released September 21 2023
 
 - Change README to markdown. The RST format is no longer supported for release.
 
