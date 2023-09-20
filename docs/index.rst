@@ -1,4 +1,4 @@
-flask-mail
+flask-mail2
 ======================================
 
 .. module:: flask-mail
@@ -13,29 +13,29 @@ Links
 -----
 
 * `documentation <http://packages.python.org/Flask-Mail/>`_
-* `source <http://github.com/mattupstate/flask-mail>`_
+* `source <git@github.com:rimvislt/flask-mail2.git>`_
 * :doc:`changelog </changelog>`
 
-Installing Flask-Mail
+Installing Flask-Mail2
 ---------------------
 
 Install with **pip** and **easy_install**::
 
-    pip install Flask-Mail
+    pip install Flask-Mail2
 
 or download the latest version from version control::
 
-    git clone https://github.com/mattupstate/flask-mail.git
-    cd flask-mail
+    git clone https://github.com:rimvislt/flask-mail2.git
+    cd flask-mail2
     python setup.py install
 
 If you are using **virtualenv**, it is assumed that you are installing flask-mail
 in the same virtualenv as your Flask application(s).
 
-Configuring Flask-Mail
+Configuring Flask-Mail2
 ----------------------
 
-**Flask-Mail** is configured through the standard Flask config API. These are the available
+**Flask-Mail2** is configured through the standard Flask config API. These are the available
 options (each is explained later in the documentation):
 
 * **MAIL_SERVER** : default **'localhost'**
@@ -60,7 +60,7 @@ options (each is explained later in the documentation):
 
 * **MAIL_ASCII_ATTACHMENTS** : default **False**
 
-In addition the standard Flask ``TESTING`` configuration option is used by **Flask-Mail**
+In addition the standard Flask ``TESTING`` configuration option is used by **Flask-Mail2**
 in unit tests (see below).
 
 Emails are managed through a ``Mail`` instance::
@@ -86,6 +86,11 @@ In this case emails will be sent using the configuration values from Flask's ``c
 context global. This is useful if you have multiple applications running in the same
 process but with different configuration options.
 
+.. admonition:: Load email configuration
+
+   Notice that Flask-Mail2 needs the configuration parameters to create a mail handler, so you have to make
+   sure to load your configuration **before** the initialization of Flask-Mail2 (either use ``Mail`` class
+   constructor or ``init_app`` method).
 
 Sending messages
 ----------------
@@ -221,7 +226,7 @@ Signalling support
 
 .. versionadded:: 0.4
 
-**Flask-Mail** now provides signalling support through a ``email_dispatched`` signal. This is sent whenever an email is
+**Flask-Mail2** now provides signalling support through a ``email_dispatched`` signal. This is sent whenever an email is
 dispatched (even if the email is not actually sent, i.e. in a testing environment).
 
 A function connecting to the ``email_dispatched`` signal takes a ``Message`` instance as a first argument, and the Flask
@@ -250,4 +255,4 @@ API
    :members: attach, add_recipient
 
 .. _Flask: http://flask.pocoo.org
-.. _GitHub: http://github.com/mattupstate/flask-mail
+.. _GitHub: http://github.com:rimvislt/flask-mail2

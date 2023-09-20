@@ -82,7 +82,7 @@ class TestInitialization(TestCase):
             self.app.testing
         )
 
-        self.assertEquals(self.mail.state.__dict__, mail.__dict__)
+        self.assertEqual(self.mail.state.__dict__, mail.__dict__)
 
 
 class TestMessage(TestCase):
@@ -200,7 +200,9 @@ class TestMessage(TestCase):
         self.mail.send(msg)
         response = msg.as_string()
         self.assertIn("From: from@example.com", str(response))
-        self.assertIn("testing\r\n testing\r\n testing \r\n \ttesting", str(response))
+        self.assertIn(
+            "testing\r\n testing\r\n testing \r\n \ttesting", str(response)
+        )
 
     def test_bad_multiline_subject(self):
         msg = Message(subject="testing\r\n testing\r\n ",
@@ -295,7 +297,10 @@ class TestMessage(TestCase):
                    content_type="text/plain",
                    filename='test doc.txt')
 
-        self.assertIn('Content-Disposition: attachment; filename="test doc.txt"', msg.as_string())
+        self.assertIn(
+            'Content-Disposition: attachment; filename="test doc.txt"',
+            msg.as_string()
+        )
 
     def test_plain_message_with_unicode_attachment(self):
         msg = Message(subject="subject",
@@ -371,7 +376,9 @@ class TestMessage(TestCase):
         plain, html = body.get_payload()
         self.assertEqual(plain.get_payload(), plain_text)
         self.assertEqual(html.get_payload(), html_text)
-        self.assertEqual(base64.b64decode(attachment.get_payload()), b'this is a test')
+        self.assertEqual(
+            base64.b64decode(attachment.get_payload()), b'this is a test'
+        )
 
     def test_date_header(self):
         before = time.time()
@@ -402,14 +409,20 @@ class TestMessage(TestCase):
                       sender=(u"ÄÜÖ → ✓", 'from@example.com>'),
                       recipients=["to@example.com"])
 
-        self.assertIn('From: =?utf-8?b?w4TDnMOWIOKGkiDinJM=?= <from@example.com>', msg.as_string())
+        self.assertIn(
+            'From: =?utf-8?b?w4TDnMOWIOKGkiDinJM=?= <from@example.com>',
+            msg.as_string()
+        )
 
     def test_unicode_sender(self):
         msg = Message(subject="subject",
                       sender=u'ÄÜÖ → ✓ <from@example.com>>',
                       recipients=["to@example.com"])
 
-        self.assertIn('From: =?utf-8?b?w4TDnMOWIOKGkiDinJM=?= <from@example.com>', msg.as_string())
+        self.assertIn(
+            'From: =?utf-8?b?w4TDnMOWIOKGkiDinJM=?= <from@example.com>',
+            msg.as_string()
+        )
 
     def test_unicode_headers(self):
         msg = Message(subject="subject",
@@ -425,7 +438,7 @@ class TestMessage(TestCase):
         h2 = Header("From: %s" % sanitize_address(u"ÄÜÖ → ✓ <from@example.com>"))
         h3 = Header("Cc: %s" % sanitize_address(u"Ö <cc@example.com>"))
 
-        # Ugly, but there's no guaranteed order of the recipieints in the header
+        # Ugly, but there's no guaranteed order of the recipients in the header
         try:
             self.assertIn(h1_a.encode(), response)
         except AssertionError:
@@ -456,7 +469,9 @@ class TestMessage(TestCase):
 
         # ascii body
         msg.body = "normal ascii text"
-        self.assertIn('Content-Type: text/plain; charset="us-ascii"', msg.as_string())
+        self.assertIn(
+            'Content-Type: text/plain; charset="us-ascii"', msg.as_string()
+        )
 
         # ascii html
         msg = Message(sender="from@example.com",
@@ -465,21 +480,27 @@ class TestMessage(TestCase):
                       charset='us-ascii')
         msg.body = None
         msg.html = "<html><h1>hello</h1></html>"
-        self.assertIn('Content-Type: text/html; charset="us-ascii"', msg.as_string())
+        self.assertIn(
+            'Content-Type: text/html; charset="us-ascii"', msg.as_string()
+        )
 
         # unicode body
         msg = Message(sender="from@example.com",
                       subject="subject",
                       recipients=["foo@bar.com"])
         msg.body = u"ünicöde ←→ ✓"
-        self.assertIn('Content-Type: text/plain; charset="utf-8"', msg.as_string())
+        self.assertIn(
+            'Content-Type: text/plain; charset="utf-8"', msg.as_string()
+        )
 
         # unicode body and unicode html
         msg = Message(sender="from@example.com",
                       subject="subject",
                       recipients=["foo@bar.com"])
         msg.html = u"ünicöde ←→ ✓"
-        self.assertIn('Content-Type: text/plain; charset="utf-8"', msg.as_string())
+        self.assertIn(
+            'Content-Type: text/plain; charset="utf-8"', msg.as_string()
+        )
         self.assertIn('Content-Type: text/html; charset="utf-8"', msg.as_string())
 
         # unicode body and attachments
@@ -488,7 +509,9 @@ class TestMessage(TestCase):
                       recipients=["foo@bar.com"])
         msg.html = None
         msg.attach(data=b"foobar", content_type='text/csv')
-        self.assertIn('Content-Type: text/plain; charset="utf-8"', msg.as_string())
+        self.assertIn(
+            'Content-Type: text/plain; charset="utf-8"', msg.as_string()
+        )
 
         # unicode sender as tuple
         msg = Message(sender=(u"送信者", "from@example.com"),
@@ -503,7 +526,9 @@ class TestMessage(TestCase):
         self.assertNotIn('Subject: =?utf-8?', msg.as_string())
         self.assertIn('Reply-To: =?iso-2022-jp?', msg.as_string())
         self.assertNotIn('Reply-To: =?utf-8?', msg.as_string())
-        self.assertIn('Content-Type: text/plain; charset="iso-2022-jp"', msg.as_string())
+        self.assertIn(
+            'Content-Type: text/plain; charset="iso-2022-jp"', msg.as_string()
+        )
 
         # unicode subject sjis
         msg = Message(sender="from@example.com",
@@ -512,7 +537,9 @@ class TestMessage(TestCase):
                       charset='shift_jis')  # japanese
         msg.body = u'内容'
         self.assertIn('Subject: =?iso-2022-jp?', msg.as_string())
-        self.assertIn('Content-Type: text/plain; charset="iso-2022-jp"', msg.as_string())
+        self.assertIn(
+            'Content-Type: text/plain; charset="iso-2022-jp"', msg.as_string()
+        )
 
         # unicode subject utf-8
         msg = Message(sender="from@example.com",
@@ -521,7 +548,9 @@ class TestMessage(TestCase):
                       charset='utf-8')
         msg.body = u'内容'
         self.assertIn('Subject: subject', msg.as_string())
-        self.assertIn('Content-Type: text/plain; charset="utf-8"', msg.as_string())
+        self.assertIn(
+            'Content-Type: text/plain; charset="utf-8"', msg.as_string()
+        )
 
         # ascii subject
         msg = Message(sender="from@example.com",
@@ -530,7 +559,9 @@ class TestMessage(TestCase):
                       charset='us-ascii')
         msg.body = "normal ascii text"
         self.assertNotIn('Subject: =?us-ascii?', msg.as_string())
-        self.assertIn('Content-Type: text/plain; charset="us-ascii"', msg.as_string())
+        self.assertIn(
+            'Content-Type: text/plain; charset="us-ascii"', msg.as_string()
+        )
 
         # default charset
         msg = Message(sender="from@example.com",
@@ -538,7 +569,9 @@ class TestMessage(TestCase):
                       recipients=["foo@bar.com"])
         msg.body = "normal ascii text"
         self.assertNotIn('Subject: =?', msg.as_string())
-        self.assertIn('Content-Type: text/plain; charset="utf-8"', msg.as_string())
+        self.assertIn(
+            'Content-Type: text/plain; charset="utf-8"', msg.as_string()
+        )
 
     def test_empty_subject_header(self):
         msg = Message(sender="from@example.com",
