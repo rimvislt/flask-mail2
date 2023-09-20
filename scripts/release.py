@@ -162,9 +162,9 @@ def main():
 
     tags = get_git_tags()
 
-    for lib in ['Sphinx', 'Sphinx-PyPI-upload']:
-        if not has_library_installed(lib):
-            fail('Build requires that %s be installed', lib)
+    # for lib in ['Sphinx', 'Sphinx-PyPI-upload']:
+    #     if not has_library_installed(lib):
+    #         fail('Build requires that %s be installed', lib)
 
     if version in tags:
         fail('Version "%s" is already tagged', version)

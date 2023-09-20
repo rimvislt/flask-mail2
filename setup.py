@@ -13,11 +13,9 @@ Links
 """
 from setuptools import setup
 
-import flask_mail
-
 setup(
     name='Flask-Mail2',
-    version=flask_mail.__version__,
+    version='1.0.1',
     url='https://github.com/rimvislt/flask-mail2',
     license='BSD',
     author='Dan Jacob',
