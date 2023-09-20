@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# flask-mail documentation build configuration file, created by
+# flask-mail2 documentation build configuration file, created by
 # sphinx-quickstart on Fri May 28 11:39:14 2010.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -11,7 +11,8 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys, os
+import os
+import sys
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -38,7 +39,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Flask-Mail'
+project = u'Flask-Mail2'
 copyright = u'2010, Dan Jacob'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -46,7 +47,7 @@ copyright = u'2010, Dan Jacob'
 # built documents.
 #
 # The short X.Y version.
-version = '0.9.1'
+version = '1.0.1'
 # The full version, including alpha/beta/rc tags.
 release = version
 

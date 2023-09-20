@@ -1,7 +1,17 @@
-Flask-Mail Changelog
+Flask-Mail2 Changelog
 ====================
 
-Here you can see the full list of changes between each Flask-Mail release.
+Here you can see the full list of changes between each Flask-Mail2 release.
+
+Version 1.0.1
+-------------
+
+Released September 20 2023
+
+- Fix typos
+- Filter None values from recipients on Message.send_to() #153
+- Add tips for email configuration #151
+- Update styling
 
 Version 1.0.0
 -------------

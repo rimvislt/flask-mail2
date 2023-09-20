@@ -1,5 +1,5 @@
 """
-Flask-Mail
+Flask-Mail2
 ----------
 
 A Flask extension for sending email messages.
@@ -13,10 +13,11 @@ Links
 """
 from setuptools import setup
 
+import flask_mail
 
 setup(
     name='Flask-Mail2',
-    version='0.9.1',
+    version=flask_mail.__version__,
     url='https://github.com/rimvislt/flask-mail2',
     license='BSD',
     author='Dan Jacob',

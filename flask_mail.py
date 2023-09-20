@@ -11,7 +11,7 @@
 
 from __future__ import with_statement
 
-__version__ = '0.9.1'
+__version__ = '1.0.1'
 
 import re
 import blinker
@@ -39,6 +39,7 @@ if PY3:
     string_types = str,
     text_type = str
     from email import policy
+
     message_policy = policy.SMTP
 else:
     string_types = basestring,
@@ -86,8 +87,9 @@ def force_text(s, encoding='utf-8', errors='strict'):
             raise FlaskMailUnicodeDecodeError(s, *e.args)
         else:
             s = ' '.join([force_text(arg, encoding, strings_only,
-                    errors) for arg in s])
+                                     errors) for arg in s])
     return s
+
 
 def sanitize_subject(subject, encoding='utf-8'):
     try:
@@ -98,6 +100,7 @@ def sanitize_subject(subject, encoding='utf-8'):
         except UnicodeEncodeError:
             subject = Header(subject, 'utf-8').encode()
     return subject
+
 
 def sanitize_address(addr, encoding='utf-8'):
     if isinstance(addr, string_types):
@@ -130,6 +133,7 @@ def _has_newline(line):
     if line and ('\r' in line or '\n' in line):
         return True
     return False
+
 
 class Connection(object):
     """Handles connection to host."""
@@ -175,8 +179,9 @@ class Connection(object):
         assert message.send_to, "No recipients have been added"
 
         assert message.sender, (
-                "The message does not specify a sender and a default sender "
-                "has not been configured")
+            "The message does not specify a sender and a default sender "
+            "has not been configured"
+        )
 
         if message.has_bad_headers():
             raise BadHeaderError
@@ -296,6 +301,9 @@ class Message(object):
 
     @property
     def send_to(self):
+        if self.recipients:
+            self.recipients = [r for r in self.recipients if r is not None]
+
         return set(self.recipients) | set(self.bcc or ()) | set(self.cc or ())
 
     @property
@@ -398,7 +406,7 @@ class Message(object):
     def as_bytes(self):
         if PY34:
             return self._message().as_bytes()
-        else: # fallback for old Python (3) versions
+        else:  # fallback for old Python (3) versions
             return self._message().as_string().encode(self.charset or 'utf-8')
 
     def __str__(self):
@@ -523,7 +531,7 @@ class _MailMixin(object):
             return Connection(app.extensions['mail'])
         except KeyError:
             raise RuntimeError(
-                "The current application was not configured with Flask-Mail"
+                "The current application was not configured with Flask-Mail2"
             )
 
 

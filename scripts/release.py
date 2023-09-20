@@ -74,7 +74,7 @@ def set_filename_version(filename, version_number, pattern):
     changed = []
 
     def inject_version(match):
-        before, old, after = match.groups()
+        before, _, after = match.groups()
         changed.append(True)
         return before + version_number + after
 
@@ -105,7 +105,8 @@ def set_docs_version(version):
 
 
 def build_and_upload():
-    Popen([sys.executable, 'setup.py', 'sdist', 'build_sphinx', 'upload', 'upload_sphinx']).wait()
+    # 'build_sphinx','upload_sphinx', 'upload'
+    Popen([sys.executable, 'setup.py', 'sdist']).wait()
 
 
 def fail(message, *args):
@@ -170,8 +171,8 @@ def main():
     if release_date.date() != date.today():
         fail('Release date is not today')
 
-    if not branch_is('main'):
-        fail('You are not on the main branch')
+    if not branch_is('master'):
+        fail('You are not on the master branch')
 
     if not git_is_clean():
         fail('You have uncommitted changes in git')
