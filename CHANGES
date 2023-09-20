@@ -3,6 +3,13 @@ Flask-Mail Changelog
 
 Here you can see the full list of changes between each Flask-Mail release.
 
+Version 1.0.0
+-------------
+
+Released August 20 2023
+
+- Clone of Flask-mail
+
 
 Version 0.9.1
 -------------

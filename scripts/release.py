@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
     make-release
@@ -20,7 +20,7 @@ _date_clean_re = re.compile(r'(\d+)(st|nd|rd|th)')
 
 
 def installed_libraries():
-    return Popen(['pip', 'freeze'], stdout=PIPE).communicate()[0]
+    return Popen(['pip3', 'freeze'], stdout=PIPE).communicate()[0].decode("utf-8")
 
 
 def has_library_installed(library):
@@ -38,11 +38,11 @@ def parse_changelog():
 
             version = match.group(1).strip()
 
-            if lineiter.next().count('-') != len(line.strip()):
+            if next(lineiter).count('-') != len(line.strip()):
                 fail('Invalid hyphen count below version line: %s', line.strip())
 
             while 1:
-                released = lineiter.next().strip()
+                released = next(lineiter).strip()
                 if released:
                     break
 
@@ -109,16 +109,16 @@ def build_and_upload():
 
 
 def fail(message, *args):
-    print >> sys.stderr, 'Error:', message % args
+    print(sys.stderr, 'Error:', message % args)
     sys.exit(1)
 
 
 def info(message, *args):
-    print >> sys.stderr, message % args
+    print(sys.stderr, message % args)
 
 
 def get_git_tags():
-    return set(Popen(['git', 'tag'], stdout=PIPE).communicate()[0].splitlines())
+    return set(Popen(['git', 'tag'], stdout=PIPE).communicate()[0].decode("utf-8").splitlines())
 
 
 def git_is_clean():
@@ -142,7 +142,7 @@ def update_version(version):
 
 
 def get_branches():
-    return set(Popen(['git', 'branch'], stdout=PIPE).communicate()[0].splitlines())
+    return set(Popen(['git', 'branch'], stdout=PIPE).communicate()[0].decode("utf-8").splitlines())
 
 
 def branch_is(branch):
@@ -170,8 +170,8 @@ def main():
     if release_date.date() != date.today():
         fail('Release date is not today')
 
-    if not branch_is('master'):
-        fail('You are not on the master branch')
+    if not branch_is('main'):
+        fail('You are not on the main branch')
 
     if not git_is_clean():
         fail('You have uncommitted changes in git')
